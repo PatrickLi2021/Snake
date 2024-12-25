@@ -1,0 +1,60 @@
+Script started on 2023-02-13 17:16:54-05:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="187" LINES="20"]
+]0;cs300-user@b7e5d7e3df5b: ~/cs300-s23-projects-PatrickLi2021/snake[01;32mcs300-user@b7e5d7e3df5b[00m:[01;34m~/cs300-s23-projects-PatrickLi2021/snake[00m$ bash
+]0;cs300-user@b7e5d7e3df5b: ~/cs300-s23-projects-PatrickLi2021/snake[01;32mcs300-user@b7e5d7e3df5b[00m:[01;34m~/cs300-s23-projects-PatrickLi2021/snake[00m$ ./snake 0
+[?1049h[22;0;0t[1;20r(B[m[4l[?7h[?1h=[?25l[H[2J=================================================================
+[1m[31m==65470==ERROR: AddressSanitizer: heap-buffer-overflow on address 0xffffaa2007b0 at pc 0xaaaac2492820 bp 0xfffffb165350 sp 0xfffffb165370
+[1m[0m[1m[34mREAD of size 8 at 0xffffaa2007b0 thread T0[1m[0m
+    #0 0xaaaac249281c in update src/game.c:67
+    #1 0xaaaac2497574 in main src/snake.c:124
+    #2 0xffffae517e0c in __libc_start_main ../csu/libc-start.c:308
+    #3 0xaaaac2491df0  (/home/cs300-user/cs300-s23-projects-PatrickLi2021/snake/snake+0x1df0)
+
+[1m[32m0xffffaa2007b4 is located 0 bytes to the right of 4-byte region [0xffffaa2007b0,0xffffaa2007b4)
+[1m[0m[1m[35mallocated by thread T0 here:[1m[0m
+    #0 0xffffae884540 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cc:144
+    #1 0xaaaac24964b8 in insert_first src/linked_list.c:76
+    #2 0xaaaac2493280 in initialize_game src/game_setup.c:90
+    #3 0xaaaac2497304 in main src/snake.c:86
+    #4 0xffffae517e0c in __libc_start_main ../csu/libc-start.c:308
+    #5 0xaaaac2491df0  (/home/cs300-user/cs300-s23-projects-PatrickLi2021/snake/snake+0x1df0)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow src/game.c:67 in update
+Shadow bytes around the buggy address:
+  0x200ff54400a0: [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m04[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[35mfd[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m07[1m[0m
+  0x200ff54400b0: [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[35mfd[1m[0m [1m[35mfd[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[35mfd[1m[0m [1m[35mfd[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m04[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m04[1m[0m
+  0x200ff54400c0: [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m04[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m04[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m04[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m04[1m[0m
+  0x200ff54400d0: [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m04[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m04[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m04[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m04[1m[0m
+  0x200ff54400e0: [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m04[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m04[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m04[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[0m00[1m[0m [1m[0m04[1m[0m
+=>0x200ff54400f0: [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[35mfd[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m[[1m[0m04[1m[0m][1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m
+  0x200ff5440100: [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m
+  0x200ff5440110: [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m
+  0x200ff5440120: [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m
+  0x200ff5440130: [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m
+  0x200ff5440140: [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m [1m[31mfa[1m[0m
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           [1m[0m00[1m[0m
+  Partially addressable: [1m[0m01[1m[0m [1m[0m02[1m[0m [1m[0m03[1m[0m [1m[0m04[1m[0m [1m[0m05[1m[0m [1m[0m06[1m[0m [1m[0m07[1m[0m 
+  Heap left redzone:       [1m[31mfa[1m[0m
+  Freed heap region:       [1m[35mfd[1m[0m
+  Stack left redzone:      [1m[31mf1[1m[0m
+  Stack mid redzone:       [1m[31mf2[1m[0m
+  Stack right redzone:     [1m[31mf3[1m[0m
+  Stack after return:      [1m[35mf5[1m[0m
+  Stack use after scope:   [1m[35mf8[1m[0m
+  Global redzone:          [1m[31mf9[1m[0m
+  Global init order:       [1m[36mf6[1m[0m
+  Poisoned by user:        [1m[34mf7[1m[0m
+  Container overflow:      [1m[34mfc[1m[0m
+  Array cookie:            [1m[31mac[1m[0m
+  Intra object redzone:    [1m[33mbb[1m[0m
+  ASan internal:           [1m[33mfe[1m[0m
+  Left alloca redzone:     [1m[34mca[1m[0m
+  Right alloca redzone:    [1m[34mcb[1m[0m
+  Shadow gap:              [1m[0mcc[1m[0m
+==65470==ABORTING
+]0;cs300-user@b7e5d7e3df5b: ~/cs300-s23-projects-PatrickLi2021/snake[01;32mcs300-user@b7e5d7e3df5b[00m:[01;34m~/cs300-s23-projects-PatrickLi2021/snake[00m$ c]104[!p[?3;4l[4l>]0;cs300-user@b7e5d7e3df5b: ~/cs300-s23-projects-PatrickLi2021/snake[01;32mcs300-user@b7e5d7e3df5b[00m:[01;34m~/cs300-s23-projects-PatrickLi2021/snake[00m$ exit
+exit
+]0;cs300-user@b7e5d7e3df5b: ~/cs300-s23-projects-PatrickLi2021/snake[01;32mcs300-user@b7e5d7e3df5b[00m:[01;34m~/cs300-s23-projects-PatrickLi2021/snake[00m$ exit
+exit
+
+Script done on 2023-02-13 17:17:10-05:00 [COMMAND_EXIT_CODE="0"]
