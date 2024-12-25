@@ -1,8 +1,5 @@
 # Snake
 
-## Code:
-Available upon request (patrick_li@brown.edu or patrickli2021@gmail.com)
-
 ## Overview:
 This project is a terminal-based re-creation of Snake, a famous early computer game widely cloned and reproduced. This project involves a basic playable verison of the game with customizable levels, modifiable playing fields, and standard scorekeeping. This version adheres to the following rules:
 
