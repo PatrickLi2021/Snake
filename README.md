@@ -1,54 +1,56 @@
-CSCI 0300 Project 1 - Snake
-===========================
+# Snake
 
-## Design Overview:
+## Overview:
+This project is a terminal-based re-creation of Snake, a famous early computer game widely cloned and reproduced. This project involves a basic playable verison of the game with customizable levels, modifiable playing fields, and standard scorekeeping. This version adheres to the following rules:
 
-For this project, the principle design was creating the classic game Snake, where the snake is represented as a linked list where each node of the linked list stores an index corresponding to its position within a cells array. The user can move the snake across the board by using the arrow keys, which insert and remove nodes from the snake to create movement. Additionally, when the snake encounters certain obstacles or features (i.e. food, walls, or itself), it can either grow (and increment the score by 1) or die, causing the game to terminate.
+- The snake moves around a rectangular playing field bordered by walls, and with some optional internal walls.
+- The player uses the arrow keys to change the snake's direction.
+- Food appears at random locations on the playing field, and if the snake's head hits the food, the snake eats it. The player's score then increases by 1 and new food appears elsewhere
+- When the snake runs into a wall or its own body, it dies and the game is over.
 
-The main methods of this project were the `update()` method, which keeps track of the movement of the snake and handles these obstacles/features, and `initialize_game()` which takes care of rendering, placing food, and setting up the game board. Another cool design aspect of this project involved creating custom boards through decompressed board strings, allowing the user to play on other boards that are not the default 10 by 20 cell board. The assigning of cells via this decompressed board string was handled by a helper function called `populate_board()`.
+## Project Structure:
+Below is an outline of all the files that are provided along with a brief description:
 
-Lastly, the user is able to type in their name and have it be displayed when the game is over, along with the score. This is handled in `read_name()` in the `game.c` file and additionally, the `mbslen()` method allows the user to type in names involving any Unicode character, allowing for more flexibility and inclusion within the game.
+In `snake/src/`:
+- `common.h`: Contains definitions for the `input_key` enum and `snake` struct, declarations for global variables defined in `common.c`, and function headers for `common.c`
+- `game_over.h`: Contains function headers for `game_over.c`
+- `game_setup.h`: Contains the definition for the `board_init_status` enum and function headers for `game_setup.c`
+- `game.h`: Contains function headers for `game.c`
+- `linked_list.h`: Contains the definition for the `node` struct and function headers for `linked_list.h`
+- `mbstrings.h`: Contains function headers for `mbstrings.c`
+- `render.h`: Contains fuction headers for `render.c`
+- `snake.c`: Contains support functions and main code for gameplay
 
-## Collaborators:
-Josh Benzon, Aaron Wang, Alex Choi, Angela Li
+In `snake/test/`
+- `traces.json`: Contains all of the traces (i.e. test cases) that a working implementation should pass
 
-## Responsible Computing:
-Partner CS login: ali190
+## Overview:
 
-## Extra Credit attempted:
-No
+### Game Data:
+The game board has certain dimensions, may contain walls, and will have a snake. The game supports user-created levels whose board dimensions may differ. The snake's position is also accessible via global metadata based on arrow key inputs from the user. The width and height of the board are global variables (`size_t width` and `size_t height`). `cells` is what is used to represent the actual game board. For this representation, an array of integers is used.
 
-## How long did it take to complete Snake?
-~25 hours
+The game state variables are stored as `int g_game_over` and `int g_score`. These are defined at the top of `common.c`.
 
-<!-- Enter an approximate number of hours that you spent actively working on the project. -->
+### Game Loop:
+Many computer games are designed around the idea of a core game loop that repeats over an dover until the game reaches a "game over" state (in this case, it is indicated by the `g_game_over` global variable). Our game loop is
 
-## SRC Component:
+1. Wait (for some specified amount of time) for user input
+2. Retrieve user input
+3. Update the game state based on user input
+4. Render the new game state to the screen
 
-### Who founded the Consortium? Who is responsible among the current members, and how might that affect decisions being made for Unicode?
+Part of these actions are handled by the following 3 functions:
 
-The Unicode Consortium was founded by Joe Becker, Lee Collins, and Mark Davis. Becker was a computer scientist, Collins was a software engineer, and Davis was a specialist in internationalization and specialization of software who eventually became the first president of the organization. Members of the corporation include major computer corporations, software producers, database vendors, government ministries, research institutions, and more. Because the consortium is mainly composed of large companies and institutions, this might make it difficult for individuals from more underrepresented backgrounds to have their voices heard within the organization. As a result, certain less popular languages may not have characters included in the Unicode standard since the main people making decisions are those who are heading these large companies.
+- `usleep(useconds_t usec)`: A library function that suspends execution for a given amount of time, measured in microseconds
+- `update(int* cells, size_t width, size_t height, snake_t* snake_p, enum input_key input, int growing)`: The update function that updates the game state based on the user's input
+- `render_game(int* cells, size_t width, size_t height)`: A fucntion that renders the given game state into a visual game that appears in the terminal
 
-### Find a language that is not yet in Unicode, has only recently been supported (e.g. in the last 10 years), or is/was missing important characters. What is/was missing, and how does this affect the users of the language?
+### Game Board Decompression:
+As stated previously, the game has support for loading user-specified board layouts as a command line argument. An example of this would be 
 
-- One language that is not yet in Unicode is the Ranjana script, a Brahmic script developed around 1100 CE that was used in India and is still used today by the Newar people who live in parts of Nepal. 
-- A few documents have been submitted for encoding the Ranjana script in the Unicode standard but no characters have been introduced yet. 
-- Although this doesn’t affect a huge number of people around the world, those of Newar descent who reside in certain areas of Nepal and India who practice these linguistic and cultural traditions in modern society might find it difficult to maintain this language, especially if it is not supported by computers.
+`W80|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W1E78W1|W80`
 
-### For this question, you will need to work with a classmate! Make sure to coordinate so that you outline opposing positions for Part A (e.g. if you outline the ‘for’ position, your partner defends the ‘against’ position). Then, come together and discuss Part B!
+where `W` represents a wall, `E` represents empty space, `S` represents the snake, and the vertical bars are delimiters between each row of the game board. The game has implemented error handling for incorrect board strings that are passed into the command line (i.e. bad characters, incorrect dimensions, multiple snakes, etc.)
 
-### My Conclusion (A)
-- For my discussion about the Han unification, I was on the side of supporting the unification. 
-- The main point that I outlined in my argument was that many of the glyphs that are similar within the languages have virtually no difference and therefore, they should be consolidated into one encoding. 
-- Another point that I considered in my rationale was that bringing these characters together would limit the size of Unicode and allow for other less common languages to have their characters represented in the encoding when they didn’t have any representation to begin with.
-
-- For this part of the question, I learned that Unicode has a section of their encodings called CJK Unified Ideographs which contains almost 21,000 Chinese characters within the block. 
-- This block not only includes characters used in the Chinese writing system but also kanji used in the Japanese writing system and hanja (whose use is diminishing in Korea). 
-- I think that in some ways, Unicode did a good job preserving some of these traditional characters but in the same vein, this took up a lot of space when it came to allowing others to be represented. 
-- In some ways, I think that this overall method is positive but when semantically, many of these characters are the same, it shouldn’t make a difference when it comes to having every single character of the three languages included. 
-- Another concern that was brought up by my partner was that languages such as Chinese and Japanese don’t have too many differences when it comes to the legibility of the text, but in regards to textbooks, this could be problematic when interchanging characters.
-
-### Partner Discussion (B)
-- My partner made the following claims against unification. She argued that it is simply not an accurate representation of each language and that each language has its own different glyphs, therefore making it impossible for one unified version to accurately represent a language. 
-- She also claimed that the Han unification merged characters that users of each language found disparate, producing many inaccuracies. 
-- The cultural effects of this unification with distinct languages is also harmful because it creates generalizations that can be made about the groups that are not true, altering the public's perceptions about them.
+### Snake Representation:
+The growing snake is represented as a pointer to a linked list of coordinates, which allows the program to extend/trim the list as the snake moves. On each iteration, one block is added to the head of the snake while one block is removed from the end of the snake. The linked list essentially stores the snake's current position and the `update` function handles the new structure.
